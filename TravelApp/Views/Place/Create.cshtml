@@ -1,0 +1,47 @@
+﻿@using TravelApp.Data.Enum
+@model PlaceImageConvert
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" class="form-control" placeholder="Title">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" class="form-control" placeholder="Description">
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="photo" class="control-label"></label>
+        <input asp-for="photo" class="form-control" />
+        <span asp-validation-for="photo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PlaceCategory">Category</label>
+        <select asp-for="PlaceCategory" asp-items="@Html.GetEnumSelectList<PlaceCategory>()" class="form-control form-control-lg">
+               <option>--Select--</option>
+        </select>
+        <span asp-validation-for="PlaceCategory" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address.Country">Country</label>
+        <input asp-for="Address.Country" class="form-control" placeholder="Country">
+        <span asp-validation-for="Address.Country" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address.City">City</label>
+        <input asp-for="Address.City" class="form-control" placeholder="City">
+        <span asp-validation-for="Address.City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address.Street">Street</label>
+        <input asp-for="Address.Street" class="form-control" placeholder="Street">
+        <span asp-validation-for="Address.Street" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
