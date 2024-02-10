@@ -10,7 +10,7 @@ namespace TravelApp.Models
       public string? Name { get; set; }
       public int? Age { get; set; }
       [ForeignKey("Address")]
-      public int AddressId { get; set; }
+      public int? AddressId { get; set; }
       public Address? Address { get; set; }
       public ICollection<Place> Place { get; set; }
       public ICollection<Trip> Trip { get; set; }
