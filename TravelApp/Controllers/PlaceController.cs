@@ -13,11 +13,13 @@ namespace TravelApp.Controllers
     {
         private readonly IPlaceRepository _placeRepository;
         IWebHostEnvironment _hostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PlaceController(IPlaceRepository placeRepository, IWebHostEnvironment hostEnvironment)
+        public PlaceController(IPlaceRepository placeRepository, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             _placeRepository = placeRepository;
             _hostEnvironment = hostEnvironment;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> Index()
         {
@@ -34,8 +36,10 @@ namespace TravelApp.Controllers
         }
 
         public IActionResult Create()
-        { 
-            return View();
+        {
+            var curUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
+            var createPlaceViewModel = new PlaceImageConvert { AppUserId = curUserId };
+            return View(createPlaceViewModel);
         }
 
         [HttpPost]
@@ -57,12 +61,12 @@ namespace TravelApp.Controllers
 
             Place p = new Place
             {
-
                 Title = place.Title,
                 Description = place.Description,
                 Image = filename,
                 Address = place.Address,
                 PlaceCategory = place.PlaceCategory,
+                AppUserId = place.AppUserId,
             };
             _placeRepository.Add(p);
 

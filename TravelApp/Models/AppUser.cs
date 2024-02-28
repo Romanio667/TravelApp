@@ -9,6 +9,9 @@ namespace TravelApp.Models
     {
       public string? Name { get; set; }
       public int? Age { get; set; }
+      public string? ProfileImageURL {  get; set; }    
+      public string? Country { get; set; }
+      public string? City { get; set; }
       [ForeignKey("Address")]
       public int? AddressId { get; set; }
       public Address? Address { get; set; }

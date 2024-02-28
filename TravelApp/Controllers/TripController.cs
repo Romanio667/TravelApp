@@ -11,11 +11,13 @@ namespace TravelApp.Controllers
     {
         private readonly ITripRepository _tripRepository;
         IWebHostEnvironment _hostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TripController(ITripRepository tripRepository, IWebHostEnvironment hostEnvironment)
+        public TripController(ITripRepository tripRepository, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             _tripRepository = tripRepository;
             _hostEnvironment = hostEnvironment;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> Index()
         {
@@ -31,7 +33,9 @@ namespace TravelApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var curUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
+            var createTripViewModel = new TripImageConvert { AppUserId = curUserId };
+            return View(createTripViewModel);
         }
 
         [HttpPost]
@@ -52,12 +56,12 @@ namespace TravelApp.Controllers
             }
             Trip t = new Trip
             {
-
                 Title = trip.Title,
                 Description = trip.Description,
                 Image = filename,
                 Address = trip.Address,
                 TripCategory = trip.TripCategory,
+                AppUserId = trip.AppUserId,
             };
             _tripRepository.Add(t);
             return RedirectToAction("Index");

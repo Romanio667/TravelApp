@@ -57,7 +57,7 @@ namespace TravelApp.Controllers
             return View(response);
         }
 
-        [HttpPost]
+ /*       [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid) return View(registerViewModel);
@@ -79,6 +79,30 @@ namespace TravelApp.Controllers
             if (newUserResponse.Succeeded) 
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
             return RedirectToAction("Index", "Trip");
+        }*/
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new AppUser
+                {
+                    UserName = registerViewModel.EmailAddress,
+                    Email = registerViewModel.EmailAddress
+                };
+                var result = await _userManager.CreateAsync(user, registerViewModel.Password);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Trip");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View();
         }
 
         [HttpPost]
