@@ -8,6 +8,6 @@
         public string? ProfileImageURL { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

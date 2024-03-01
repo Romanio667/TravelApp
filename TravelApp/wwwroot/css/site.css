@@ -20,3 +20,14 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.card img {
+    border-radius: 10px; /* «адайте желаемый радиус закруглени€ краев */
+    overflow: hidden; /* ќбрезать изображение, чтобы оно не выходило за границы карточки */
+}
+
+.btn-margin {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

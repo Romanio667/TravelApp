@@ -73,7 +73,7 @@ namespace TravelApp.Data
                     });
                     context.SaveChanges();
                 }
-                //Races
+                //Trips
                 if (!context.Trip.Any())
                 {
                     context.Trip.AddRange(new List<Trip>()
@@ -125,14 +125,14 @@ namespace TravelApp.Data
 
                 //Users
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-                string adminUserEmail = "teddysmithdeveloper@gmail.com";
+                string adminUserEmail = "roma11092000@gmail.com";
 
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
                 if (adminUser == null)
                 {
                     var newAdminUser = new AppUser()
                     {
-                        UserName = "teddysmithdev",
+                        UserName = "roman",
                         Email = adminUserEmail,
                         EmailConfirmed = true,
                         Address = new Address()
@@ -146,7 +146,7 @@ namespace TravelApp.Data
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
-                string appUserEmail = "user@etickets.com";
+                string appUserEmail = "user@gmail.com";
 
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)

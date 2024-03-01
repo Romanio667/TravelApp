@@ -4,6 +4,7 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">Album example</h1>
@@ -15,13 +16,14 @@
     </div>
 </section>
 <div class="album py-5 bg-light">
-        <div class="container">
-          <div class="row">
-          <h1 class="fm-light">Places near @Model.City, @Model.Country</h1>
-            @if(Model.Places == null)
+    <div class="container">
+        <div class="row">
+            <h1 class="fm-light">Places near @Model.City, @Model.Country</h1>
+            @if (Model.Places.ToList().Count == 0)
             {
-                <h1 class="fm-light">There are no interesting places in your area!<a asp-area="" asp-controller="Account"
-                    asp-action="Login">Login</a></h1>
+                <h1 class="fm-light">
+                    There are no interesting places in your area!
+                </h1>
             }
             else
             {
@@ -33,7 +35,7 @@
                             <div class="card-body">
                                 <p class="card-text">@item.Title</p>
                                 <p class="card-text">@item.Description</p>
-                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a type="button" button asp-controller="Place" asp-action="Detail" asp-route-id="@item.Id"
                                            class="btn btn-sm btn-outline-secondary">View</a>
@@ -45,6 +47,6 @@
                     </div>
                 }
             }
-          </div>
-     </div>
+        </div>
+    </div>
 </div>
