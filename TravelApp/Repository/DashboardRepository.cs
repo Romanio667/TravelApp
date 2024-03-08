@@ -29,6 +29,18 @@ namespace TravelApp.Repository
             return userTrips.ToList();
         }
 
+        public async Task<List<Place>> GetUserPlaces(string userId)
+        {
+            var userPlaces = _context.Place.Where(r => r.AppUserId == userId);
+            return await userPlaces.ToListAsync();
+        }
+
+        public async Task<List<Trip>> GetUserTrips(string userId)
+        {
+            var userTrips = _context.Trip.Where(r => r.AppUserId == userId);
+            return await userTrips.ToListAsync();
+        }
+
         public async Task<AppUser> GetUserById(string id)
         {
             return await _context.Users.FindAsync(id);
