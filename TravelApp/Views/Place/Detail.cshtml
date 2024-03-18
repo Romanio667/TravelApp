@@ -5,8 +5,8 @@
 
         <!-- Portfolio Item Heading -->
         <h1 class="my-4">
-            Page Heading
-            <small>Secondary Text</small>
+            @Html.Raw(Model.Title)
+           @*  <small>Secondary Text</small> *@
         </h1>
 
         <!-- Portfolio Item Row -->
@@ -17,7 +17,7 @@
             </div>
 
             <div class="col-md-4">
-                <h3 class="my-3">@Model.Title</h3>
+                <h3 class="my-3">Description</h3>
                 <p>@Model.Description</p>
                 <h3 class="my-3">Location</h3>
                 <ul>
@@ -30,14 +30,14 @@
 
         </div>
         <!-- /.row -->
-        <!-- Bing Maps Container -->
-        <div id="bingMap" style="height: 500px; margin-bottom: 20px; margin-top: 20px;"></div>
-
         <!-- Yandex Maps Container -->
         <div id="yandexMap" style="height: 500px; margin-bottom: 20px; margin-top: 20px;"></div>
 
+        <!-- Bing Maps Container -->
+        <div id="bingMap" style="height: 500px; margin-bottom: 20px; margin-top: 20px;"></div>
+
         <!-- Related Projects Row -->
-        <h3 class="my-4">Related Projects</h3>
+       @*  <h3 class="my-4">Related Projects</h3>
 
         <div class="row">
 
@@ -49,16 +49,16 @@
 
             <!-- Add more related projects if needed -->
 
-        </div>
+        </div> *@
         <!-- /.row -->
 
     </div>
     <!-- /.container -->
-    <!-- Yandex Maps API script with callback -->
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=c210afef-f7ed-4197-95cb-3c4006f9b01a&lang=ru_RU" type="text/javascript"></script>
-
     <!-- Bing Maps API script with callback -->
     <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=Aq_d0lf66EmUHlozFnSN8OhgTI3jDwVpvu8t1tMCbSGCY6abJtbv4hvyCSD0UAZU&callback=loadMapScenario"></script>
+
+    <!-- Yandex Maps API script with callback -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=c210afef-f7ed-4197-95cb-3c4006f9b01a&lang=ru_RU" type="text/javascript"></script>
 
     <!-- Bing Maps REST Services geocoding script -->
     <script type="text/javascript">
@@ -110,6 +110,28 @@
             var street = '@Html.Raw(Model.Address.Street)';
             var address = country + ', ' + city + ', ' + street;
             geocodeAddress(address);
+
+            // Add route button
+            var searchManager = Microsoft.Maps.Search.SearchManager(map);
+            Microsoft.Maps.Events.addHandler(map, 'click', function () {
+                searchManager.reverseGeocode(map.getCenter(), function (result) {
+                    if (result && result.results && result.results.length > 0) {
+                        var waypoint = result.results[0].location;
+                        var userLocation = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                        var userWaypoint = new Microsoft.Maps.Directions.Waypoint({ location: userLocation });
+                        var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+                        directionsManager.setRequestOptions({
+                            routeMode: Microsoft.Maps.Directions.RouteMode.driving
+                        });
+                        directionsManager.addWaypoint(userWaypoint);
+                        directionsManager.addWaypoint(waypoint);
+
+
+                        directionsManager.setRenderOptions({ itineraryContainer: '#directionsPanel' });
+                        directionsManager.calculateDirections();
+                    }
+                });
+            });
         }
 
         // Yandex Maps Initialization Script
@@ -150,6 +172,17 @@
                 var street = '@Html.Raw(Model.Address.Street)';
                 var address = country + ', ' + city + ', ' + street;
                 geocodeAddress(address);
+
+                // Add route button
+                myMap.controls.add('routeButtonControl', {
+                    float: 'right'
+                });
+
+                // Add route from user location to the specified location
+                myMap.controls.get('routeButtonControl').routePanel.state.set({
+                    from: '', // Откуда
+                    to: address // Куда
+                });
             }
         }
 

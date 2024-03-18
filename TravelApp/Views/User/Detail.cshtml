@@ -27,12 +27,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-header">
+                    <h5>Contacts</h5>
+                </div>
                 <div class="card mb-4 mb-lg-0">
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush rounded-3">
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <p class="mb-0">Email:  @Model.UserName</p> <!-- Moved email to the left -->
                                 <i class="fas fa-globe fa-lg text-warning"></i>
-                                <p class="mb-0">Email @Model.UserName</p>
                             </li>
                             <!-- Add more list items as needed -->
                         </ul>
@@ -40,6 +43,9 @@
                 </div>
             </div>
             <div class="col-lg-8">
+                <div class="card-header">
+                    <h5>Information</h5>
+                </div>
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="row">

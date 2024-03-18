@@ -31,3 +31,11 @@ body {
     margin-bottom: 10px;
     margin-top: 10px;
 }
+
+.rounded-circle {
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
