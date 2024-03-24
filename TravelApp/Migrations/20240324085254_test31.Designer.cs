@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelApp.Data;
 
@@ -11,9 +12,11 @@ using TravelApp.Data;
 namespace TravelApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240324085254_test31")]
+    partial class test31
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,12 +317,12 @@ namespace TravelApp.Migrations
                     b.Property<string>("Contact")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EntryFee")
+                        .HasColumnType("int");
 
                     b.Property<string>("Facebook")
                         .HasColumnType("nvarchar(max)");
@@ -338,9 +341,6 @@ namespace TravelApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("TripCategory")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TripFee")
                         .HasColumnType("int");
 
                     b.Property<string>("Twitter")
@@ -367,12 +367,15 @@ namespace TravelApp.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ArrivalCity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ArrivalCountry")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ArrivalStreet")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ArrivalTime")
@@ -395,7 +398,7 @@ namespace TravelApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TripAddresses");
+                    b.ToTable("TripAddress");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

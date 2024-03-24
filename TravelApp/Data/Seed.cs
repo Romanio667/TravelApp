@@ -84,11 +84,14 @@ namespace TravelApp.Data
                             Image = "first.png",
                             Description = "This is the description",
                             TripCategory = TripCategory.Short,
-                            Address = new Address()
+                            TripAddress = new TripAddress()
                             {
-                                Country = "Russia",
-                                City = "Novosibirsk",
-                                Street = "Svechnikova 2"
+                                DepartureCountry = "Russia",
+                                DepartureCity = "Novosibirsk",
+                                DepartureStreet = "Svechnikova 2",
+                                ArrivalCountry = "Russia",
+                                ArrivalCity = "Novosibirsk",
+                                ArrivalStreet = "Svechnikova 2"
                             }
                         },
                         new Trip()
@@ -97,13 +100,16 @@ namespace TravelApp.Data
                             Image = "first.png",
                             Description = "This is the description",
                             TripCategory = TripCategory.Medium,
-                            AddressId = 5,
-                            Address = new Address()
+                            //TripAddressId = 5,
+                            TripAddress = new TripAddress()
                             {
-                                Country = "Russia",
-                                City = "Novosibirsk",
-                                Street = "Svechnikova 2"
-                            }
+                                DepartureCountry = "Russia",
+                                DepartureCity = "Novosibirsk",
+                                DepartureStreet = "Svechnikova 2",
+                                ArrivalCountry = "Russia",
+                                ArrivalCity = "Novosibirsk",
+                                ArrivalStreet = "Svechnikova 2"
+                            },                          
                         }
                     });
                     context.SaveChanges();

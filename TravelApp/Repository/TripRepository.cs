@@ -33,12 +33,12 @@ namespace TravelApp.Repository
 
         public async Task<IEnumerable<Trip>> GetAllTripsByCity(string city)
         {
-            return await _context.Trip.Where(c => c.Address.City.Contains(city)).ToListAsync();
+            return await _context.Trip.Where(c => c.TripAddress.DepartureCity.Contains(city)).ToListAsync();
         }
 
         public async Task<Trip> GetByIdAsync(int id)
         {
-            return await _context.Trip.Include(i => i.Address).FirstOrDefaultAsync(i => i.Id == id);
+            return await _context.Trip.Include(i => i.TripAddress).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public bool Save()

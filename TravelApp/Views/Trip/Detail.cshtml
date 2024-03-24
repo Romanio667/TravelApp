@@ -1,70 +1,218 @@
-﻿@model Trip
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@if (Model != null)
+{
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Portfolio Item Heading -->
+        <h1 class="my-4">
+            @Html.Raw(Model.Title)
+            @*  <small>Secondary Text</small> *@
+        </h1>
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-8">
+                <img class="img-fluid" src="@Url.Content("~/images/" + Model.Image)" alt="">
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Description</h3>
+                <p>@Model.Description</p>
+                <h3 class="my-3">Departure Location</h3>
+                <ul>
+                    <li>@Html.Raw(Model.TripAddress.DepartureCountry)</li>
+                    <li>@Html.Raw(Model.TripAddress.DepartureCity)</li>
+                    <li>@Html.Raw(Model.TripAddress.DepartureStreet)</li>
+                </ul>
+                <h3 class="my-3">Arrival Location</h3>
+                <ul>
+                    <li>@Html.Raw(Model.TripAddress.ArrivalCountry)</li>
+                    <li>@Html.Raw(Model.TripAddress.ArrivalCity)</li>
+                    <li>@Html.Raw(Model.TripAddress.ArrivalStreet)</li>                 
+                </ul>
+                <h3 class="my-3">Journey Time</h3>
+                <ul>
+                    <li>Departure Time: @Html.Raw(Model.TripAddress.DepartureTime)</li>
+                    <li>Arrival Time: @Html.Raw(Model.TripAddress.ArrivalTime)</li>
+                    <li>Trip Category: @Model.TripCategory</li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.row -->
+        <!-- Yandex Maps Container -->
+        <div id="yandexMap" style="height: 500px; margin-bottom: 20px; margin-top: 20px;"></div>
+
+        <!-- Bing Maps Container -->
+        <div id="bingMap" style="height: 500px; margin-bottom: 20px; margin-top: 20px;"></div>
+
+        <!-- Related Projects Row -->
+        @*  <h3 class="my-4">Related Projects</h3>
+
+    <div class="row">
+
+    <div class="col-md-3 col-sm-6 mb-4">
+    <a href="#">
+    <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
+    </a>
+    </div>
+
+    <!-- Add more related projects if needed -->
+
+    </div> *@
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+    <!-- Bing Maps API script with callback -->
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=Aq_d0lf66EmUHlozFnSN8OhgTI3jDwVpvu8t1tMCbSGCY6abJtbv4hvyCSD0UAZU&callback=loadMapScenario"></script>
+
+    <!-- Yandex Maps API script with callback -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=c210afef-f7ed-4197-95cb-3c4006f9b01a&lang=ru_RU" type="text/javascript"></script>
+
+    <!-- Bing Maps REST Services geocoding script -->
+    <script type="text/javascript">
+        function loadMapScenario() {
+            var map;
+
+            // Create the map
+            map = new Microsoft.Maps.Map(document.getElementById('bingMap'), {
+                credentials: 'Aq_d0lf66EmUHlozFnSN8OhgTI3jDwVpvu8t1tMCbSGCY6abJtbv4hvyCSD0UAZU',
+                mapTypeId: Microsoft.Maps.MapTypeId.road,
+                zoom: 15 // Adjust the zoom level as needed
+            });
+
+            var geocodeAddress = function (address) {
+                var bingMapsKey = 'Aq_d0lf66EmUHlozFnSN8OhgTI3jDwVpvu8t1tMCbSGCY6abJtbv4hvyCSD0UAZU';
+                var bingMapsGeocodingUrl = 'https://dev.virtualearth.net/REST/v1/Locations?q=' + encodeURIComponent(address) + '&key=' + bingMapsKey;
+
+                fetch(bingMapsGeocodingUrl)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        if (data && data.resourceSets && data.resourceSets.length > 0 && data.resourceSets[0].resources.length > 0) {
+                            var location = new Microsoft.Maps.Location(data.resourceSets[0].resources[0].point.coordinates[0], data.resourceSets[0].resources[0].point.coordinates[1]);
+                            map.setView({ center: location, zoom: 15 });
+
+                            // Create a pushpin at the specified location
+                            var title = '@Html.Raw(Model.Title)';
+                            var subTitle = '@Html.Raw(Model.TripAddress.DepartureCity)';
+                            var pin = new Microsoft.Maps.Pushpin(location, {
+                                title: title,
+                                subTitle: subTitle
+                            });
+
+                            // Add the pushpin to the map
+                            map.entities.push(pin);
+                        } else {
+                            console.log('Location not found');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Error fetching geocoding data:', error);
+                    });
+            };
+
+            // Call geocodeAddress with your address string
+            var country = '@Html.Raw(Model.TripAddress.DepartureCountry)';
+            var city = '@Html.Raw(Model.TripAddress.DepartureCity)';
+            var street = '@Html.Raw(Model.TripAddress.DepartureStreet)';
+            var address = country + ', ' + city + ', ' + street;
+            geocodeAddress(address);
+
+            // Add route button
+            var searchManager = Microsoft.Maps.Search.SearchManager(map);
+            Microsoft.Maps.Events.addHandler(map, 'click', function () {
+                searchManager.reverseGeocode(map.getCenter(), function (result) {
+                    if (result && result.results && result.results.length > 0) {
+                        var waypoint = result.results[0].location;
+                        var userLocation = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                        var userWaypoint = new Microsoft.Maps.Directions.Waypoint({ location: userLocation });
+                        var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+                        directionsManager.setRequestOptions({
+                            routeMode: Microsoft.Maps.Directions.RouteMode.driving
+                        });
+                        directionsManager.addWaypoint(userWaypoint);
+                        directionsManager.addWaypoint(waypoint);
+
+
+                        directionsManager.setRenderOptions({ itineraryContainer: '#directionsPanel' });
+                        directionsManager.calculateDirections();
+                    }
+                });
+            });
+        }
+
+        // Yandex Maps Initialization Script
+        function loadYandexMap() {
+            ymaps.ready(init);
+
+            function init() {
+                var myMap = new ymaps.Map("yandexMap", {
+                    center: [55.76, 37.64], // Установите центр карты на нужные вам координаты
+                    zoom: 15
+                });
+
+                var geocodeAddress = function (address) {
+                    ymaps.geocode(address)
+                        .then(function (res) {
+                            var coordinates = res.geoObjects.get(0).geometry.getCoordinates();
+                            myMap.setCenter(coordinates, 15);
+
+                            // Создайте метку на карте
+                            var title = '@Html.Raw(Model.Title)';
+                            var subTitle = '@Html.Raw(Model.TripAddress.DepartureCity)';
+                            var myPlacemark = new ymaps.Placemark(coordinates, {
+                                hintContent: title,
+                                balloonContent: subTitle
+                            });
+
+                            // Добавьте метку на карту
+                            myMap.geoObjects.add(myPlacemark);
+                        })
+                        .catch(function (error) {
+                            console.error('Error fetching geocoding data:', error);
+                        });
+                };
+
+                // Call geocodeAddress with your address string
+                var country = '@Html.Raw(Model.TripAddress.DepartureCountry)';
+                var city = '@Html.Raw(Model.TripAddress.DepartureCity)';
+                var street = '@Html.Raw(Model.TripAddress.DepartureStreet)';
+                var addressDeparture = country + ', ' + city + ', ' + street;
+                geocodeAddress(addressDeparture);
+
+                // Call geocodeAddress with your address string
+                var country = '@Html.Raw(Model.TripAddress.ArrivalCountry)';
+                var city = '@Html.Raw(Model.TripAddress.ArrivalCity)';
+                var street = '@Html.Raw(Model.TripAddress.ArrivalStreet)';
+                var addressArrival = country + ', ' + city + ', ' + street;
+                geocodeAddress(addressArrival);
+
+                // Add route button
+                myMap.controls.add('routeButtonControl', {
+                    float: 'right'
+                });
+
+                // Add route from user location to the specified location
+                myMap.controls.get('routeButtonControl').routePanel.state.set({
+                    from: addressDeparture, // Откуда
+                    to: addressArrival // Куда
+                });
+            }
+        }
+
+        // Вызов инициализации Яндекс Карт
+        ymaps.ready(function () {
+            loadYandexMap();
+        });
+        // Вызов инициализации Bing Maps
+        loadMapScenario();
+    </script>
 }
-
-<!-- Page Content -->
-<div class="container">
-
-    <!-- Portfolio Item Heading -->
-    <h1 class="my-4">
-        Page Heading
-        <small>Secondary Text</small>
-    </h1>
-
-    <!-- Portfolio Item Row -->
-    <div class="row">
-
-        <div class="col-md-8">
-            <img class="img-fluid" src="@Url.Content("~/images/" + Model.Image)" alt="">
-        </div>
-
-        <div class="col-md-4">
-            <h3 class="my-3">@Model.Title</h3>
-            <p>@Model.Description</p>
-            <h3 class="my-3">Location</h3>
-            <ul>
-                <li>@Model.Address.Country</li>
-                <li>@Model.Address.City</li>
-                <li>@Model.TripCategory</li>
-            </ul>
-        </div>
-
-    </div>
-    <!-- /.row -->
-    <!-- Related Projects Row -->
-    <h3 class="my-4">Related Projects</h3>
-
-    <div class="row">
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
-
-    </div>
-    <!-- /.row -->
-
-</div>
-<!-- /.container -->
+else
+{
+    <p>No data available</p>
+}

@@ -12,14 +12,15 @@ namespace TravelApp.Models
         public string Description { get; set; }
         public IFormFile? photo { get; set; }
         public DateTime? StartTime { get; set; }
-        public int? EntryFee { get; set; }
+        public int? TripFee { get; set; }
+        public string? Currency { get; set; }
         public string? Website { get; set; }
         public string? Twitter { get; set; }
         public string? Facebook { get; set; }
         public string? Contact { get; set; }
-        [ForeignKey("Address")]
-        public int AddressId { get; set; }
-        public Address Address { get; set; }
+        [ForeignKey("TripAddress")]
+        public int TripAddressId { get; set; }
+        public TripAddress TripAddress { get; set; }
         public TripCategory TripCategory { get; set; }
         [ForeignKey("AppUser")]
         public string? AppUserId { get; set; }

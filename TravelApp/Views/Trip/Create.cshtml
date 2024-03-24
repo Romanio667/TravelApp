@@ -5,6 +5,8 @@
 *@
 @{
 }
+<hr>
+<h4>General Information</h4>
 <form method="post" asp-action="Create" enctype="multipart/form-data">
     <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />
     <div class="form-group">
@@ -18,7 +20,19 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="photo" class="control-label"></label>
+        <label asp-for="TripFee">Trip Fee</label>
+        <input asp-for="TripFee" class="form-control" placeholder="Trip Fee">
+        <span asp-validation-for="TripFee" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Currency">Currency</label>
+        <select asp-for="Currency" asp-items="@Html.GetEnumSelectList<CurrencyCategory>()" class="form-control form-control-lg">
+            <option>--Select--</option>
+        </select>
+        <span asp-validation-for="Currency" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="photo" class="control-label">Photo</label>
         <input asp-for="photo" class="form-control" />
         <span asp-validation-for="photo" class="text-danger"></span>
     </div>
@@ -29,20 +43,55 @@
         </select>
         <span asp-validation-for="TripCategory" class="text-danger"></span>
     </div>
+
+    <!-- Departure Section -->
+    <hr>
+    <h4>Departure Information</h4>
     <div class="form-group">
-        <label asp-for="Address.Country">Country</label>
-        <input asp-for="Address.Country" class="form-control" placeholder="Country">
-        <span asp-validation-for="Address.Country" class="text-danger"></span>
+        <label asp-for="TripAddress.DepartureCountry">Country</label>
+        <input asp-for="TripAddress.DepartureCountry" class="form-control" placeholder="Departure Country">
+        <span asp-validation-for="TripAddress.DepartureCountry" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Address.City">City</label>
-        <input asp-for="Address.City" class="form-control" placeholder="City">
-        <span asp-validation-for="Address.City" class="text-danger"></span>
+        <label asp-for="TripAddress.DepartureCity">City</label>
+        <input asp-for="TripAddress.DepartureCity" class="form-control" placeholder="Departure City">
+        <span asp-validation-for="TripAddress.DepartureCity" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Address.Street">Street</label>
-        <input asp-for="Address.Street" class="form-control" placeholder="Street">
-        <span asp-validation-for="Address.Street" class="text-danger"></span>
+        <label asp-for="TripAddress.DepartureStreet">Street</label>
+        <input asp-for="TripAddress.DepartureStreet" class="form-control" placeholder="Departure Street">
+        <span asp-validation-for="TripAddress.DepartureStreet" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="TripAddress.DepartureTime">Time</label>
+        <input asp-for="TripAddress.DepartureTime" type="datetime-local" class="form-control" placeholder="Departure Time">
+        <span asp-validation-for="TripAddress.DepartureTime" class="text-danger"></span>
+    </div>
+    <!-- End of Departure Section -->
+    <!-- Arrival Section -->
+    <hr>
+    <h4>Arrival Information</h4>
+    <div class="form-group">
+        <label asp-for="TripAddress.ArrivalCountry">Country</label>
+        <input asp-for="TripAddress.ArrivalCountry" class="form-control" placeholder="Arrival Country">
+        <span asp-validation-for="TripAddress.ArrivalCountry" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TripAddress.ArrivalCity">City</label>
+        <input asp-for="TripAddress.ArrivalCity" class="form-control" placeholder="Arrival City">
+        <span asp-validation-for="TripAddress.ArrivalCity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TripAddress.ArrivalStreet">Street</label>
+        <input asp-for="TripAddress.ArrivalStreet" class="form-control" placeholder="Arrival Street">
+        <span asp-validation-for="TripAddress.ArrivalStreet" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TripAddress.ArrivalTime">Time</label>
+        <input asp-for="TripAddress.ArrivalTime" type="datetime-local" class="form-control" placeholder="Arrival Time">
+        <span asp-validation-for="TripAddress.ArrivalTime" class="text-danger"></span>
+    </div>
+    <!-- End of Arrival Section -->
+
     <button type="submit" class="btn btn-primary btn-margin">Submit</button>
 </form>

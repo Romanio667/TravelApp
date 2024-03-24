@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelApp.Data;
 
@@ -11,9 +12,11 @@ using TravelApp.Data;
 namespace TravelApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240323120929_test30")]
+    partial class test30
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,18 +311,21 @@ namespace TravelApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Contact")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Currency")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EntryFee")
+                        .HasColumnType("int");
 
                     b.Property<string>("Facebook")
                         .HasColumnType("nvarchar(max)");
@@ -334,13 +340,7 @@ namespace TravelApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TripAddressId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TripCategory")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TripFee")
                         .HasColumnType("int");
 
                     b.Property<string>("Twitter")
@@ -351,51 +351,11 @@ namespace TravelApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("TripAddressId");
-
                     b.ToTable("Trip");
-                });
-
-            modelBuilder.Entity("TravelApp.Models.TripAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ArrivalCity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ArrivalCountry")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ArrivalStreet")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ArrivalTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DepartureCity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DepartureCountry")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DepartureStreet")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DepartureTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TripAddresses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -477,19 +437,19 @@ namespace TravelApp.Migrations
 
             modelBuilder.Entity("TravelApp.Models.Trip", b =>
                 {
+                    b.HasOne("TravelApp.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TravelApp.Models.AppUser", "AppUser")
                         .WithMany("Trip")
                         .HasForeignKey("AppUserId");
 
-                    b.HasOne("TravelApp.Models.TripAddress", "TripAddress")
-                        .WithMany()
-                        .HasForeignKey("TripAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Address");
 
                     b.Navigation("AppUser");
-
-                    b.Navigation("TripAddress");
                 });
 
             modelBuilder.Entity("TravelApp.Models.AppUser", b =>
