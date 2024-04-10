@@ -37,7 +37,7 @@ namespace TravelApp.Repository
 
         public async Task<IEnumerable<Place>> GetPlaceByCity(string city)
         {
-            return await _context.Place.Where(c => c.Address.City.Contains(city)).ToListAsync();
+            return await _context.Place.Where(c => c.Address.City.Contains(city) || c.Address.Country.Contains(city)).ToListAsync();         
         }
 
         public bool Save()

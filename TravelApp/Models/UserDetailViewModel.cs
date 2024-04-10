@@ -11,5 +11,6 @@
         public string? ProfileImageUrl { get; set; }
         public List<Place>? Places { get; set; }
         public List<Trip>? Trips { get; set; }
+        public double AverageRating { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿@if (Model != null)
+﻿@using System.Security.Claims
+@if (Model != null)
 {
     <!-- Page Content -->
     <div class="container">
@@ -30,6 +31,37 @@
 
         </div>
         <!-- /.row -->
+        <!-- Tips Block -->
+        <div class="tips">
+            <h2>Tips for this place:</h2>
+            @if (Model.Tips != null && Model.Tips.Count > 0)
+            {
+                <ul id="tipsList">
+                    @foreach (var tip in Model.Tips)
+                    {
+                        <li id="tip-@tip.Id">
+                            @tip.Content
+                            @if (User.Identity.IsAuthenticated && tip.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                            {
+                                <button onclick="deleteTip(@tip.Id)" class="btn btn-sm btn-danger">Delete</button>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No tips available for this place.</p>
+            }
+        </div>
+
+        <!-- Add Tip Form -->
+        <form method="post" action="@Url.Action("AddTip", "Place")">
+            <input type="hidden" name="placeId" value="@Model.Id" />
+            <textarea name="tipContent" rows="3" class="form-control tip-content-input" required></textarea>
+            <button type="submit" class="btn btn-primary add-tip-btn btn-margin">Add Tip</button>
+        </form>
+
         <!-- Yandex Maps Container -->
         <div id="yandexMap" style="height: 500px; margin-bottom: 20px; margin-top: 20px;"></div>
 
@@ -192,6 +224,23 @@
         });
         // Вызов инициализации Bing Maps
         loadMapScenario();
+
+        function deleteTip(tipId) {
+            if (confirm('Are you sure you want to delete this tip?')) {
+                $.ajax({
+                    url: '@Url.Action("DeleteTip", "Place")',
+                    type: 'POST',
+                    data: { tipId: tipId },
+                    success: function () {
+                        // Успешно удалено, удаляем элемент из списка
+                        $('#tip-' + tipId).remove();
+                    },
+                    error: function () {
+                        alert('An error occurred while deleting the tip.');
+                    }
+                });
+            }
+        }
     </script>
 }
 else

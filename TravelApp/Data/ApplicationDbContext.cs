@@ -14,5 +14,7 @@ namespace TravelApp.Data
         public DbSet<Place> Place { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<TripAddress> TripAddresses { get; set; }
+        public DbSet<UserRating> UserRatings { get; set; }
+        public DbSet<Tip> Tips { get; set; }
     }
 }

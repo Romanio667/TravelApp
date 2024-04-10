@@ -1,40 +1,69 @@
 ﻿@model IEnumerable<Place>
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    ViewData["Title"] = "Index";
+    string searchString = ViewData["SearchString"] as string;
 }
 
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row">
-            @foreach(var item in Model)
+            <div class="col-md-12">
+                @using (Html.BeginForm("Index", "Place", FormMethod.Get))
+                {
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="searchString" placeholder="Search by city or country" value="@searchString">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(searchString))
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Results for: @searchString</h4>
+                </div>
+            </div>
+        }
+        <div class="row">
+            @if (Model.Any())
             {
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="../images/@Html.DisplayFor(modelItem => item.Image)" width="100%" height="225" alt="Card image cap">
-                        <div class="card-body">
-                            <p class="card-text">@item.Title</p>
-                            <p class="card-text">@item.Description</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a type="btn btn-success" button asp-controller="Place" asp-action="Detail" asp-route-id="@item.Id"
-                                        class="btn btn-sm btn-outline-secondary">View</a>
-                                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-                                    {
-                                        <a type="button" button asp-controller="Place" asp-action="Edit" asp-route-id="@item.Id"
-                                           class="btn btn-sm btn-outline-secondary">Edit</a>
-                                        <a type="button" button asp-controller="Place" asp-action="Delete" asp-route-id="@item.Id"
-                                           class="btn btn-sm btn-outline-secondary">Delete</a>
-                                    }
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top" src="../images/@Html.DisplayFor(modelItem => item.Image)" width="100%" height="225" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text">@item.Title</p>
+                                <p class="card-text">@item.Description</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a type="btn btn-success" button asp-controller="Place" asp-action="Detail" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-secondary">View</a>
+                                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                        {
+                                            <a type="button" button asp-controller="Place" asp-action="Edit" asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-outline-secondary">Edit</a>
+                                            <a type="button" button asp-controller="Place" asp-action="Delete" asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-outline-secondary">Delete</a>
+                                        }
+                                    </div>
+                                    <small class="text-muted">@item.PlaceCategory</small>
                                 </div>
-                                <small class="text-muted">@item.PlaceCategory</small>
                             </div>
                         </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <h4>No results found</h4>
                 </div>
-            }         
+            }
         </div>
     </div>
 </div>

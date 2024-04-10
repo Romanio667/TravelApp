@@ -19,9 +19,22 @@ namespace TravelApp.Controllers
             _hostEnvironment = hostEnvironment;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            IEnumerable<Trip> trips =await _tripRepository.GetAll();
+            IEnumerable<Trip> trips;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                // Фильтрация по стране или городу отправления
+                trips = await _tripRepository.GetAllTripsByCity(searchString);
+                ViewData["SearchString"] = searchString; 
+            }
+            else
+            {
+                trips = await _tripRepository.GetAll();
+                ViewData["SearchString"] = "";
+            }
+
             return View(trips);
         }
 

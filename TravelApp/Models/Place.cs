@@ -19,6 +19,7 @@ namespace TravelApp.Models
             [ForeignKey("AppUser")]
             public string? AppUserId { get; set; }
             public AppUser? AppUser { get; set; }
+            public ICollection<Tip>? Tips { get; set; }
         }
-    }
+}
 

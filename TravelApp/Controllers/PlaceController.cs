@@ -6,6 +6,8 @@ using TravelApp.Interfaces;
 using TravelApp.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace TravelApp.Controllers
 {
@@ -14,26 +16,49 @@ namespace TravelApp.Controllers
         private readonly IPlaceRepository _placeRepository;
         IWebHostEnvironment _hostEnvironment;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ITipRepository _tipRepository;
 
-        public PlaceController(IPlaceRepository placeRepository, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
+        public PlaceController(IPlaceRepository placeRepository, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor, ITipRepository tipRepository)
         {
             _placeRepository = placeRepository;
             _hostEnvironment = hostEnvironment;
             _httpContextAccessor = httpContextAccessor;
+            _tipRepository = tipRepository;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            IEnumerable<Place> places = await _placeRepository.GetAll();
+            IEnumerable<Place> places;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                // Фильтрация по городу или стране (в данном случае по названию места)
+                places = await _placeRepository.GetPlaceByCity(searchString);
+                ViewData["SearchString"] = searchString;
+            }
+            else
+            {
+                places = await _placeRepository.GetAll();
+                ViewData["SearchString"] = "";
+            }
+
             return View(places);
         }
-        
-        public async Task<IActionResult> Detail(int id) 
-        {
 
+        public async Task<IActionResult> Detail(int id)
+        {
             Place place = await _placeRepository.GetByIdAsync(id);
+            if (place == null)
+            {
+                return NotFound(); // Место не найдено
+            }
+
+            // Загрузка советов для этого места
+            var tips = await _tipRepository.GetTipsForPlace(id);
+            place.Tips = tips.ToList(); // Явное преобразование в List<Tip>
 
             return View(place);
         }
+
 
         public IActionResult Create()
         {
@@ -148,6 +173,71 @@ namespace TravelApp.Controllers
             _placeRepository.Delete(placeDetails);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddTip(int placeId, string tipContent)
+        {
+            var place = await _placeRepository.GetByIdAsync(placeId);
+            if (place == null)
+            {
+                return NotFound(); // Место не найдено
+            }
+
+            // Получаем ID текущего аутентифицированного пользователя
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var tip = new Tip
+            {
+                Content = tipContent,
+                PlaceId = placeId,
+                UserId = userId // Устанавливаем свойство UserId
+            };
+
+            await _tipRepository.Add(tip);
+
+            // Возвращаем JSON-ответ с информацией о добавленном совете
+            return RedirectToAction("Detail", new { id = placeId });
+        }
+
+
+        // Добавление метода удаления tip
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteTip(int tipId)
+        {
+            var tip = await _tipRepository.GetByIdAsync(tipId);
+            if (tip == null)
+            {
+                // Возвращаем JSON с информацией о том, что Tip не был найден
+                return Json(new { success = false, message = "Tip not found" });
+            }
+
+            int placeId = tip.PlaceId; // Сохраняем ID места, к которому относится tip
+            await _tipRepository.Delete(tipId); // Передаем только ID вместо объекта tip
+
+            // Возвращаем JSON с информацией об успешном удалении и ID места для перенаправления
+            return Json(new { success = true, placeId = placeId });
+        }
+
+        //// Добавление метода редактирования tip
+
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<IActionResult> EditTip(int tipId, string newContent)
+        //{
+        //    var tip = await _tipRepository.GetByIdAsync(tipId);
+        //    if (tip == null)
+        //    {
+        //        return NotFound(); // Tip не найден
+        //    }
+
+        //    int placeId = tip.PlaceId; // Сохраняем ID места, к которому относится tip
+        //    tip.Content = newContent;
+        //    await _tipRepository.Update(tip); // Corrected to use Update method instead of UpdateById
+
+        //    return RedirectToAction("Detail", new { id = placeId });
+        //}
 
     }
 }

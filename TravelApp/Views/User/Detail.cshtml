@@ -1,7 +1,5 @@
-﻿@using TravelApp.Models
-@model UserDetailViewModel
-
-
+﻿@model UserDetailViewModel
+@using System.Security.Claims
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +8,7 @@
 
 <section style="background-color: #eee;">
     <div class="container py-5">
-        <div class="row">
-            
-        </div>
+        <div class="row"></div>
 
         <div class="row">
             <div class="col-lg-4">
@@ -22,8 +18,6 @@
                              class="rounded-circle img-fluid" style="width: 150px;">
                         <h5 class="my-3">@Model.UserName</h5>
                         <div class="d-flex justify-content-center mb-2">
-                            @* <button type="button" class="btn btn-primary">Follow</button>
-                            <button type="button" class="btn btn-outline-primary ms-1">Message</button> *@
                         </div>
                     </div>
                 </div>
@@ -34,10 +28,9 @@
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush rounded-3">
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <p class="mb-0">Email:  @Model.UserName</p> <!-- Moved email to the left -->
+                                <p class="mb-0">Email:  @Model.UserName</p>
                                 <i class="fas fa-globe fa-lg text-warning"></i>
                             </li>
-                            <!-- Add more list items as needed -->
                         </ul>
                     </div>
                 </div>
@@ -74,9 +67,26 @@
                                 <p class="text-muted mb-0">@Model.Age</p>
                             </div>
                         </div>
-                        <!-- Add more rows as needed -->                  
+                    </div>
+                </div>
+                <!-- Добавление рейтинга пользователя -->
+                <div class="card-header">
+                    <h5>Rating</h5>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                        <div class="p-3 mb-0">
+                            <span>Average Rating: </span>
+                            <span id="averageRating">@Model.AverageRating</span>
+                            <div class="rating-stars">
+                                <span class="star" data-rating="1"></span>
+                                <span class="star" data-rating="2"></span>
+                                <span class="star" data-rating="3"></span>
+                                <span class="star" data-rating="4"></span>
+                                <span class="star" data-rating="5"></span>
                             </div>
                         </div>
+                        <input type="hidden" id="ratingValue" name="rating" />
                     </div>
                 </div>
             </div>
@@ -84,126 +94,169 @@
     </div>
 </section>
 
-   
-    <section class="flush-with-above space-0">
-        <div class="bg-white">
+<section class="flush-with-above space-0">
+    <div class="bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="places-tab" data-toggle="tab" href="#places" role="tab" aria-controls="places" aria-selected="true">Places</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="races-tab" data-toggle="tab" href="#trips" role="tab" aria-controls="trips" aria-selected="false">Trips</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="flush-with-above">
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="places" role="tabpanel" aria-labelledby="places-tab">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        @if (Model.Places != null && Model.Places.Any())
+                        {
+                            @foreach (var place in Model.Places)
+                            {
+                                <div class="col-md-4">
+                                    <div class="card mb-4 box-shadow">
+                                        <img class="card-img-top" src="@Url.Content("~/images/" + place.Image)" width="100%" height="225" alt="Card image cap">
+                                        <div class="card-body">
+                                            <p class="card-text">@place.Title</p>
+                                            <p class="card-text">@place.Description</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="btn-group">
+                                                    <a type="button" asp-controller="Place" asp-action="Detail" asp-route-id="@place.Id" class="btn btn-sm btn-outline-secondary">View</a>
+                                                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                                    {
+                                                        <a type="button" asp-controller="Place" asp-action="Edit" asp-route-id="@place.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                        <a type="button" asp-controller="Place" asp-action="Delete" asp-route-id="@place.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                                    }
+                                                </div>
+                                                <small class="text-muted">@place.PlaceCategory</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-md-12">
+                                <p>No places available for this user.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="trips" role="tabpanel" aria-labelledby="trips-tab">
+        <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                            <a class="nav-link active" id="places-tab" data-toggle="tab" href="#places" role="tab" aria-controls="places" aria-selected="true">Places</a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" id="races-tab" data-toggle="tab" href="#trips" role="tab" aria-controls="trips" aria-selected="false">Trips</a>
-                            </li>
-                            <!-- Add more nav-items as needed -->
-                        </ul>
-                    </div>
-                    <!--end of col-->
-                </div>
-                <!--end of row-->
-            </div>
-            <!--end of container-->
-        </div>
-    </section>
-    <section class="flush-with-above">
-        <div class="tab-content">
-        <div class="tab-pane fade show active" id="places" role="tabpanel" aria-labelledby="places-tab">
-                <div class="album py-5 bg-light">
-                    <div class="container">
-                        <div class="row">
-                            @if (Model.Places != null && Model.Places.Any())
-                            {
-                                @foreach (var place in Model.Places)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="card mb-4 box-shadow">
-                                            <img class="card-img-top" src="@Url.Content("~/images/" + place.Image)" width="100%" height="225" alt="Card image cap">
-                                            <div class="card-body">
-                                                <p class="card-text">@place.Title</p>
-                                                <p class="card-text">@place.Description</p>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        <a type="button" asp-controller="Place" asp-action="Detail" asp-route-id="@place.Id" class="btn btn-sm btn-outline-secondary">View</a>
-                                                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-                                                        {
-                                                            <a type="button" asp-controller="Place" asp-action="Edit" asp-route-id="@place.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                                            <a type="button" asp-controller="Place" asp-action="Delete" asp-route-id="@place.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
-                                                        }
-                                                    </div>
-                                                    <small class="text-muted">@place.PlaceCategory</small>
-                                                </div>
+                    @if (Model.Trips != null && Model.Trips.Any())
+                    {
+                        @foreach (var trip in Model.Trips)
+                        {
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" src="@Url.Content("~/images/" + trip.Image)" width="100%" height="225" alt="Card image cap">
+                                    <div class="card-body">
+                                        <p class="card-text">@trip.Title</p>
+                                        <p class="card-text">@trip.Description</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <a type="button" asp-controller="Trip" asp-action="Detail" asp-route-id="@trip.Id" class="btn btn-sm btn-outline-secondary">View</a>
+                                                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                                {
+                                                    <a type="button" asp-controller="Trip" asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                    <a type="button" asp-controller="Trip" asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                                }
                                             </div>
+                                            <small class="text-muted">@trip.TripCategory</small>
                                         </div>
                                     </div>
-                                }
-                            }
-                            else
-                            {
-                                <div class="col-md-12">
-                                    <p>No places available for this user.</p>
                                 </div>
-                            }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-md-12">
+                            <p>No trips available for this user.</p>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
-        <div class="tab-content">
-        <div class="tab-pane fade" id="trips" role="tabpanel" aria-labelledby="trips-tab">
-                <div class="album py-5 bg-light">
-                    <div class="container">
-                        <div class="row">
-                            @if (Model.Trips != null && Model.Trips.Any())
-                            {
-                                @foreach (var trip in Model.Trips)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="card mb-4 box-shadow">
-                                            <img class="card-img-top" src="@Url.Content("~/images/" + trip.Image)" width="100%" height="225" alt="Card image cap">
-                                            <div class="card-body">
-                                                <p class="card-text">@trip.Title</p>
-                                                <p class="card-text">@trip.Description</p>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        <a type="button" asp-controller="Trip" asp-action="Detail" asp-route-id="@trip.Id" class="btn btn-sm btn-outline-secondary">View</a>
-                                                        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
-                                                        {
-                                                            <a type="button" asp-controller="Trip" asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                                            <a type="button" asp-controller="Trip" asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
-                                                        }
-                                                    </div>
-                                                    <small class="text-muted">@trip.TripCategory</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                <div class="col-md-12">
-                                    <p>No trips available for this user.</p>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+    </div>
+    </div>
+    </div>
+</section>
+
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#myTab a').on('click', function (e) {
-            e.preventDefault();
-            $('.tab-content .tab-pane').removeClass('show active');
-            $(this).tab('show');
+        $('.star').click(function () {
+            var rating = $(this).data('rating');
+            var userId = '@Model.Id';
+            var currentUserId = '@User.FindFirstValue(ClaimTypes.NameIdentifier)';
+            // Получаем идентификатор текущего пользователя
+            if (userId !== currentUserId) { // Проверяем, что пользователь не пытается оценить сам себя
+                $.post('@Url.Action("RateUser", "User")', { userId: userId, rating: rating }, function (data) {
+                    // Обновляем средний рейтинг пользователя
+                    $('#averageRating').text(data.averageRating);
+                });
+            } else {
+                alert('You cannot rate yourself.');
+            }
+        });
+
+        $('.star').hover(function () {
+            var rating = $(this).data('rating');
+            $('.star').removeClass('rated');
+            for (var i = 1; i <= rating; i++) {
+                $('.star[data-rating="' + i + '"]').addClass('rated');
+            }
+        }, function () {
+            $('.star').removeClass('rated');
         });
     });
+
 </script>
+<style>
+    .rating-container {
+        text-align: center;
+    }
+
+    .rating-stars {
+        margin-top: 10px;
+    }
+
+    .star {
+        cursor: pointer;
+    }
+
+        .star:before {
+            content: '\2606'; /* звезда без заливки */
+            font-size: 24px;
+            color: #ddd;
+        }
+
+    .rated:before {
+        content: '\2605'; /* звезда с заливкой */
+        color: #ffc107;
+    }
+
+    margin-top: 10px;
+    }
+</style>

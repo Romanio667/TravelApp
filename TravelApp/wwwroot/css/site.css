@@ -39,3 +39,7 @@ body {
     border-radius: 50%;
 }
 
+.tips ul li {
+    word-wrap: break-word; /* или overflow-wrap: break-word; */
+}
+

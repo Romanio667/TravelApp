@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelApp.Data;
 
@@ -11,9 +12,11 @@ using TravelApp.Data;
 namespace TravelApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240409141031_rating")]
+    partial class rating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,32 +303,6 @@ namespace TravelApp.Migrations
                     b.ToTable("Place");
                 });
 
-            modelBuilder.Entity("TravelApp.Models.Tip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PlaceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlaceId");
-
-                    b.ToTable("Tips");
-                });
-
             modelBuilder.Entity("TravelApp.Models.Trip", b =>
                 {
                     b.Property<int>("Id")
@@ -528,17 +505,6 @@ namespace TravelApp.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("TravelApp.Models.Tip", b =>
-                {
-                    b.HasOne("TravelApp.Models.Place", "Place")
-                        .WithMany("Tips")
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Place");
-                });
-
             modelBuilder.Entity("TravelApp.Models.Trip", b =>
                 {
                     b.HasOne("TravelApp.Models.AppUser", "AppUser")
@@ -561,11 +527,6 @@ namespace TravelApp.Migrations
                     b.Navigation("Place");
 
                     b.Navigation("Trip");
-                });
-
-            modelBuilder.Entity("TravelApp.Models.Place", b =>
-                {
-                    b.Navigation("Tips");
                 });
 #pragma warning restore 612, 618
         }
