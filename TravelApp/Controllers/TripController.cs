@@ -73,7 +73,7 @@ namespace TravelApp.Controllers
                 Description = trip.Description,
                 Image = filename,
                 TripFee = trip.TripFee,
-                Currency = trip.Currency,
+                CurrencyCategory = trip.CurrencyCategory,
                 TripAddress = trip.TripAddress,
                 TripCategory = trip.TripCategory,
                 AppUserId = trip.AppUserId,
@@ -95,7 +95,7 @@ namespace TravelApp.Controllers
                 Title = trip.Title,
                 Description = trip.Description,
                 TripFee = trip.TripFee,
-                Currency = trip.Currency,
+                CurrencyCategory = trip.CurrencyCategory,
                 TripAddressId = trip.TripAddressId,
                 TripAddress = trip.TripAddress,
                 TripCategory = trip.TripCategory,
@@ -121,7 +121,7 @@ namespace TravelApp.Controllers
             trip.Title = model.Title;
             trip.Description = model.Description;
             trip.TripFee = model.TripFee;
-            trip.Currency = model.Currency;
+            trip.CurrencyCategory = model.CurrencyCategory;
             trip.TripAddressId = model.TripAddressId;
             trip.TripAddress = model.TripAddress;
             trip.TripCategory = model.TripCategory;

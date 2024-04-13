@@ -9,7 +9,7 @@ namespace TravelApp.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public int? TripFee { get; set; }
-        public string? Currency { get; set; }
+        public CurrencyCategory CurrencyCategory { get; set; }
         public IFormFile? ImageFile { get; set; }
         public int TripAddressId { get; set; }
         public TripAddress TripAddress { get; set; }

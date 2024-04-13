@@ -37,6 +37,11 @@
                     <li>Arrival Time: @Html.Raw(Model.TripAddress.ArrivalTime)</li>
                     <li>Trip Category: @Model.TripCategory</li>
                 </ul>
+                <h3 class="my-3">Journey fee</h3>
+                <ul>
+                    <li>Fee: @Html.Raw(Model.TripFee)</li>
+                    <li>Currency: @Html.Raw(Model.CurrencyCategory)</li>
+                </ul>
             </div>
 
         </div>

@@ -13,7 +13,7 @@ namespace TravelApp.Models
         public string? Image { get; set; }
         public DateTime? StartTime { get; set; }
         public int? TripFee { get; set; }
-        public string? Currency { get; set; }
+        public CurrencyCategory CurrencyCategory { get; set; }
         public string? Website { get; set; }
         public string? Twitter { get; set; }
         public string? Facebook { get; set; }

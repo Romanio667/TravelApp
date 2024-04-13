@@ -23,7 +23,7 @@ namespace TravelApp.Data
                             Title = "Place 1",
                             Image = "first.png",
                             Description = "This is the description",
-                            PlaceCategory = PlaceCategory.monument,
+                            PlaceCategory = PlaceCategory.Event,
                             Address = new Address()
                             {
                                 Country = "Russia",
@@ -36,7 +36,7 @@ namespace TravelApp.Data
                             Title = "Place 2",
                             Image = "first.png",
                             Description = "This is the description",
-                            PlaceCategory = PlaceCategory.amusementPark,
+                            PlaceCategory = PlaceCategory.Theater,
                             Address = new Address()
                             {
                                 Country = "Russia",
@@ -49,7 +49,7 @@ namespace TravelApp.Data
                             Title = "Place 3",
                             Image = "first.png",
                             Description = "This is the description",
-                            PlaceCategory = PlaceCategory.cityPark,
+                            PlaceCategory = PlaceCategory.Museum,
                             Address = new Address()
                             {
                                 Country = "Russia",
@@ -62,7 +62,7 @@ namespace TravelApp.Data
                             Title = "Place 4",
                             Image = "first.png",
                             Description = "This is the description",
-                            PlaceCategory = PlaceCategory.monument,
+                            PlaceCategory = PlaceCategory.Monument,
                             Address = new Address()
                             {
                                 Country = "Russia",

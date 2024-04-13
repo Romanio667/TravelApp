@@ -2,10 +2,10 @@
 {
     public enum PlaceCategory
     {
-        cityEvent,
-        zoo,
-        monument,
-        cityPark,
-        amusementPark
+        Event,
+        Theater,
+        Monument,
+        Park,
+        Museum
     }
 }
