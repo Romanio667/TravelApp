@@ -206,6 +206,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
+         $('#myTab a').on('click', function (e) {
+            e.preventDefault();
+            $('.tab-content .tab-pane').removeClass('show active');
+            $(this).tab('show');
+        });
         $('.star').click(function () {
             var rating = $(this).data('rating');
             var userId = '@Model.Id';
@@ -231,7 +236,6 @@
             $('.star').removeClass('rated');
         });
     });
-
 </script>
 <style>
     .rating-container {

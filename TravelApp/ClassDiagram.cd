@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TravelApp.Controllers.AccountController" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAABAAAAABAAAIAAAABAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Controllers.DashboardController" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABgAAAAAAAAAIAIAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\DashboardController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Controllers.HomeController" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAQAAAAAAAAAAIAAAAQAAAAFAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Controllers.PlaceController" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABABgAAAAAAgEAAEAAAAEAAEACAAFAAAAACAA=</HashCode>
+      <FileName>Controllers\PlaceController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Controllers.TripController" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABgAAAAAAAEAAAAAAAEAAEACEAEAAAAACAA=</HashCode>
+      <FileName>Controllers\TripController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Controllers.UserController" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAgABgAAAAAAAAAAAIAIAAAAAAAAAEAAAAACAQ=</HashCode>
+      <FileName>Controllers\UserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Models.Address" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAIAAAAAAAAAAIAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Models\Address.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Models.AppUser" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAEAAAAAAIAFAAAAQAAAIAAAACAEAAAAAAAAA=</HashCode>
+      <FileName>Models\AppUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Models.Place" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAAAAAgAEAAAAAEAAIAAAAAABASAAAAQAAAAAA=</HashCode>
+      <FileName>Models\Place.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Models.Tip" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAAAAAAAAgAAAAAAAAAAEAAAAAABAA=</HashCode>
+      <FileName>Models\Tip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Models.Trip" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAgggEAACAAECAIAoAAAAjAAAABAAAAAAAI=</HashCode>
+      <FileName>Models\Trip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Models.UserRating" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAACAAAAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\UserRating.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Models.TripAddress" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAAAAAAAAIAAAEAEACBAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TripAddress.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Repository.DashboardRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAIABAABAAAAAQAAABAEAAAAAAAAAAAAAACAIA=</HashCode>
+      <FileName>Repository\DashboardRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TravelApp.Repository.PlaceRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAIAAAAAABAAAAAAAACAAAAEAAAAAAgAAAAAAIAA=</HashCode>
+      <FileName>Repository\PlaceRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TravelApp.Repository.TipRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAYAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Repository\TipRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TravelApp.Repository.TripRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAIIAAAAAABAAAAAAAAAAAAAEAAAAAAgAAAAAAIAA=</HashCode>
+      <FileName>Repository\TripRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TravelApp.Repository.UserRatingRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAABAAAAAAAAAAAAAAIAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Repository\UserRatingRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TravelApp.Repository.UserRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAIAIAAAABAAAAAAAAAAAAAEAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Repository\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TravelApp.Helpers.IPInfo" Collapsed="true">
+    <Position X="6.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAKgAIAAAAAAAIAAAAgAAAAAAABIAA=</HashCode>
+      <FileName>Helpers\IPInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Data.ApplicationDbContext" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gABAAAAAEAAAAAAAAAAAAAABAAAAAAAAAEAAQAAAAAA=</HashCode>
+      <FileName>Data\ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TravelApp.Data.UserRoles" Collapsed="true">
+    <Position X="6.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\UserRoles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TravelApp.Interfaces.IDashboardRepository" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAIAAAAAAAAAAQAAABAEAAAAAAAAAAAAAACAIA=</HashCode>
+      <FileName>Interfaces\IDashboardRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TravelApp.Interfaces.IPlaceRepository" Collapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAIAAAAAAAAAAAAAAACAAAAEAAAAAAgAAAAAAIAA=</HashCode>
+      <FileName>Interfaces\IPlaceRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TravelApp.Interfaces.ITipRepository" Collapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Interfaces\ITipRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TravelApp.Interfaces.ITripRepository" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAIIAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAIAA=</HashCode>
+      <FileName>Interfaces\ITripRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TravelApp.Interfaces.IUserRatingRepository" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IUserRatingRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TravelApp.Interfaces.IUserRepository" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAIAIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Interfaces\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
