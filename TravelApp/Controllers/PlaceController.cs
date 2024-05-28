@@ -219,25 +219,5 @@ namespace TravelApp.Controllers
             // Возвращаем JSON с информацией об успешном удалении и ID места для перенаправления
             return Json(new { success = true, placeId = placeId });
         }
-
-        //// Добавление метода редактирования tip
-
-        //[HttpPost]
-        //[Authorize]
-        //public async Task<IActionResult> EditTip(int tipId, string newContent)
-        //{
-        //    var tip = await _tipRepository.GetByIdAsync(tipId);
-        //    if (tip == null)
-        //    {
-        //        return NotFound(); // Tip не найден
-        //    }
-
-        //    int placeId = tip.PlaceId; // Сохраняем ID места, к которому относится tip
-        //    tip.Content = newContent;
-        //    await _tipRepository.Update(tip); // Corrected to use Update method instead of UpdateById
-
-        //    return RedirectToAction("Detail", new { id = placeId });
-        //}
-
     }
 }

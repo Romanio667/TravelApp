@@ -72,7 +72,7 @@ namespace TravelApp.Controllers
                 // If a new image is uploaded, update the ProfileImageURL
                 if (editVM.Image != null)
                 {
-                    // Handle image upload logic (similar to what you did in PlaceController)
+                    // Handle image upload logic (similar to what I did in PlaceController)
                     string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
                     string filename = Guid.NewGuid().ToString() + "_" + editVM.Image.FileName;
                     string filepath = Path.Combine(uploadFolder, filename);
