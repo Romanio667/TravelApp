@@ -25,7 +25,11 @@
                     <li>@Html.Raw(Model.Address.Country)</li>
                     <li>@Html.Raw(Model.Address.City)</li>
                     <li>@Html.Raw(Model.Address.Street)</li>
-                    <li>@Model.PlaceCategory</li>
+                    <li>@Model.PlaceCategory</li>                   
+                </ul>
+                <h3 class="my-3">User information</h3>
+                <ul>
+                    <li>Email: @User.Identity.Name</li>
                 </ul>
             </div>
 

@@ -42,6 +42,10 @@
                     <li>Fee: @Html.Raw(Model.TripFee)</li>
                     <li>Currency: @Html.Raw(Model.CurrencyCategory)</li>
                 </ul>
+                <h3 class="my-3">User information</h3>
+                <ul>
+                    <li>Email: @User.Identity.Name</li>
+                </ul>
             </div>
 
         </div>
